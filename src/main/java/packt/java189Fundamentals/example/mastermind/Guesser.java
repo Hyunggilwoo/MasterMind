@@ -19,15 +19,15 @@ public abstract class Guesser {
     }
 
     /**
-     * A guess matches if all rows in the table matches
-     * the guess.
+     * Checks whether the guess matches the previous guesses
+     * and their results on the Table:
      * @param guess to match the rows.
      * @return true if all rows match
      */
-    public boolean guessMatch(Color[] guess) {
-        boolean result = true;
+    private boolean guessMatch(Color[] guess) {
+        boolean result = false;
         for (Row row : table.rows) {
-            if (!row.guessMatches(guess)) {
+            if (row.guessMatches(guess)) {
                 result = false;
             }
         }
@@ -73,4 +73,6 @@ public abstract class Guesser {
             return none;
         }
     }
+
+
 }
