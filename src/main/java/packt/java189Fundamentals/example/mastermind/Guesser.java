@@ -55,7 +55,6 @@ public abstract class Guesser {
      * @return
      */
     private Color[] nextNonFirstGuess() {
-        Color[] result = new Color[]{null};
         int i = 0;
         boolean guessFound = false;
         while (i < table.nrColumns && !guessFound) {
@@ -69,8 +68,9 @@ public abstract class Guesser {
             }
         }
         if (guessFound) {
-            result = lastGuess;
+            return lastGuess;
+        } else {
+            return none;
         }
-        return result;
     }
 }
