@@ -25,6 +25,8 @@ package packt.java189Fundamentals.example.mastermind;
 */
 
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -34,33 +36,40 @@ import java.util.Random;
 public class ColorManager {
 
     /**
-     * Keeps track of the number of Colored pins.
+     * @requires nrColors > 0
+     *
      */
     final protected int nrColors;
 
+    /** Generates a place where one color connects to another color. */
+    final protected Map<Color, Color> successor = new HashMap<>();
     public static final int choice = 6;
 
+    /** It acts like the first node of a linkedList. */
+    private Color first;
+
     /**
-     *
-     * @param nrColors
+     * Generates the colored structure
+     * @param nrColors the number of color present.
      */
     public ColorManager(int nrColors) {
         this.nrColors = nrColors;
-        ...
+        generateOrders();
     }
     /**
      *
      * @return a color object.
      */
     protected Color newColor() {
+
         return new Color();
     }
 
     /**
      * Returns a randomnly ordered colored variations.
-     * @return
+     * @return the color in the array.
      */
-    private Color[] createOrders() {
+    private Color[] createColors() {
         Color[] colors = new Color[nrColors];
         for (int i = 0; i < colors.length; i++) {
             colors[i] = newColor();
@@ -74,16 +83,46 @@ public class ColorManager {
      * change the color.
      * @return
      */
-    public Color[] generateOrders() {
-        Random r = new Random();
-        int number = r.nextInt(choice);
-    }
-    /*
-     * If the next indicies of a list contains next color object,
-     * return true (if otherwise, return false).
-     */
-    public boolean isThereNextColor() {
-        return true;
+    public void generateOrders() {
+        Color[] colors = createColors();
+        first = colors[0];
+        for (int i = 0; i < colors.length; i++) {
+            successor.put(colors[i], colors[i + 1]);
+        }
     }
 
+    /**
+     * Returns the first color of the ordering.
+     * @return the first Color of the object.
+     */
+    public Color firstColor() {
+        return first;
+    }
+    /**
+     * If the next indicies of a list contains next color object,
+     * return true (if otherwise, return false).
+     * @param color is the color that I want.
+     * @return checks if the order contains the color.
+     */
+    public boolean isThereNextColor(Color color) {
+        return successor.containsKey(color);
+    }
+
+    /**
+     * Orders the color object to identify the color.
+     * @param color is what I am interested.
+     * @return color that I want to spend.
+     */
+    public Color nextColors(Color color) {
+        return successor.get(color);
+    }
+
+    /*
+    public Color nextColor(Color color) {
+        Color result = null;
+        if (!(color == Color.none)) {
+            result color.get(color.indexOf(color) + 1);
+        }
+    }
+     */
 }
