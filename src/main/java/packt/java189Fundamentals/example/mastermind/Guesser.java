@@ -74,5 +74,20 @@ public abstract class Guesser {
         }
     }
 
-
+    /**
+     * This method continues to find the next matching row
+     * or until there are no more guesses.
+     * @return
+     */
+    public Row guess() {
+        Color[] guess = nextGuess();
+        while (guess != none && guessDoesNotMatch(guess)) {
+            guess = nextGuess();
+        }
+        if (guess == none) {
+            return Row.none;
+        } else {
+            return new Row(guess);
+        }
+    }
 }
